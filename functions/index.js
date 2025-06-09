@@ -6,8 +6,13 @@ admin.initializeApp(); // Initialize the Firebase Admin SDK
 exports.sendDoorbellNotification = functions.firestore
     .document('doorbell_events/{docId}') // Listens for any new document added to 'doorbell_events'
     .onCreate(async (snapshot, context) => {
-        const eventData = snapshot.data(); // Get the data of the new doorbell event
+        const eventData = snapshot.data();
         const { deviceId, location, triggeredAt } = eventData;
+
+        if (!deviceId || !location) {
+            console.error('Missing deviceId or location in event:', eventData);
+            return null;
+        }
 
         // Construct the notification message
         const message = {

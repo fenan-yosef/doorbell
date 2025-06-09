@@ -1,4 +1,4 @@
-// utils/initMiddleware.js
+// utils/initMiddleware.ts
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 type Middleware<T = any> = (
